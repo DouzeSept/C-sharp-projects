@@ -85,7 +85,8 @@ namespace Fizzbuzz
         {
 
         }
-
+        //This methode is fit for converting a single integer to "fizzbuzz" string. To convert a serie of numbers, 
+        //for example from 1 to 100, it will be better to replace division by addition.
         public string Convert(int Input)
         {
             // Input = Math.Abs(Input);
