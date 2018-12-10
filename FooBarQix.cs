@@ -94,7 +94,6 @@ namespace FooBarQix
 
         public string Convert(uint Input)
         {
-            char[] arrChars = Input.ToString().ToCharArray();
             string Output = "", OutputBis = "";
             ReplacementBundle[] rbs = new ReplacementBundle[]
             {
@@ -107,7 +106,7 @@ namespace FooBarQix
                            select rb.ReplacingString;
             foreach (string str in strQuery)
                 Output += str;
-            foreach (char c in arrChars)
+            foreach (char c in Input.ToString())
             {
                 strQuery = from rb in rbs
                            where Char.GetNumericValue(c) == rb.Divisor
