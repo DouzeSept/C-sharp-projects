@@ -96,7 +96,6 @@ namespace FooBarQix
         {
             char[] arrChars = Input.ToString().ToCharArray();
             string Output = "", OutputBis = "";
-            bool IsNumberic = true;
             ReplacementBundle[] rbs = new ReplacementBundle[]
             {
                 new ReplacementBundle(3, "Foo"),
@@ -107,20 +106,14 @@ namespace FooBarQix
                            where Input % rb.Divisor == 0
                            select rb.ReplacingString;
             foreach (string str in strQuery)
-            {
                 Output += str;
-                IsNumberic = false;
-            }
             foreach (char c in arrChars)
             {
                 strQuery = from rb in rbs
                            where Char.GetNumericValue(c) == rb.Divisor
                            select rb.ReplacingString;
                 foreach (string str in strQuery)
-                {
                     Output += str;
-                    IsNumberic = false;
-                }    
                 if (c == '0')
                 {
                     Output += "*";
@@ -129,7 +122,7 @@ namespace FooBarQix
                 else
                     OutputBis += c.ToString();
             }
-            return IsNumberic ? OutputBis : Output;
+            return Output.All(c => c == '*') ? OutputBis : Output;
         }
 
         /* V7
