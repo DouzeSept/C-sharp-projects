@@ -94,8 +94,8 @@ namespace FooBarQix
 
         public string Convert(uint Input)
         {
-            string Output, OutputBis = "";
-            ReplacementBundle[] rbs = new ReplacementBundle[]
+            string Output, OutputBis = Input.ToString();
+            List<ReplacementBundle> rbs = new List<ReplacementBundle>
             {
                 new ReplacementBundle(3, "Foo"),
                 new ReplacementBundle(5, "Bar"),
@@ -105,20 +105,12 @@ namespace FooBarQix
                            where Input % rb.Divisor == 0
                            select rb.ReplacingString;
             Output = String.Join("", strQuery);
-            foreach (char c in Input.ToString())
-            {
-                strQuery = from rb in rbs
-                           where Char.GetNumericValue(c) == rb.Divisor
-                           select rb.ReplacingString;
-                Output += String.Join("", strQuery);
-                if (c == '0')
-                {
-                    Output += "*";
-                    OutputBis += "*";
-                }
-                else
-                    OutputBis += c.ToString();
-            }
+            rbs.Add(new ReplacementBundle(0, "*"));
+            strQuery = from c in OutputBis
+                       join rb in rbs on Char.GetNumericValue(c) equals rb.Divisor
+                       select rb.ReplacingString;
+            Output += String.Join("", strQuery);
+            OutputBis = OutputBis.Replace('0', '*');
             return Output.All(c => c == '*') ? OutputBis : Output;
         }
 
